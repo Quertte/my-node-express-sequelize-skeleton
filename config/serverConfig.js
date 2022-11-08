@@ -6,6 +6,7 @@ const session = require('express-session');
 const fs = require('fs');
 const path = require('path');
 const sessionConfig = require('./sessionConfig');
+const ssr = require('../middleware/ssr');
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '../access.log'), { flags: 'a' });
 
@@ -17,6 +18,7 @@ const serverConfig = (app) => {
   app.use(express.static('public'));
   app.use(cookieParser());
   app.use(session(sessionConfig));
+  app.use(ssr);
 };
 
 module.exports = serverConfig;
