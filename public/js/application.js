@@ -2,6 +2,9 @@
 const formRegistration = document.querySelector('#formRegistration');
 const formLogin = document.querySelector('#formLogin');
 const formEdit = document.querySelector('#formEdit');
+const formAddCard = document.querySelector('#formAddCard');
+
+const modal = document.querySelector('.modal');
 
 // inputs
 const pass = document.querySelector('#regPassword');
@@ -14,6 +17,8 @@ const cardList = document.querySelector('#cardList');
 
 // Buttons
 const deleteBtn = document.querySelector('#deleteBtn');
+
+const addCard = document.querySelector('.add-card');
 
 function validate() {
   if (pass.value !== confPass.value) {
@@ -131,6 +136,42 @@ if (deleteBtn) {
 
     if (data.delete) {
       window.location.href = data.url;
+    }
+  });
+}
+
+if (addCard) {
+  addCard.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    modal.style.height = '120vh';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+  });
+}
+
+if (formAddCard) {
+  formAddCard.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // формирование переменных через деструктуризацию
+    const {
+      method, action, title, content,
+    } = event.target;
+
+    const response = await fetch(action, {
+      method,
+      headers: { 'Content-Type': 'Application/json' },
+      body: JSON.stringify({
+        title: title.value,
+        content: content.value,
+      }),
+    });
+
+    const html = await response.text();
+
+    if (response.status === 201) {
+      modal.style.display = 'none';
+      cardList.insertAdjacentHTML('beforeend', html);
     }
   });
 }

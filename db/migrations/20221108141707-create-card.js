@@ -18,7 +18,6 @@ module.exports = {
       },
       likes: {
         type: Sequelize.INTEGER,
-        allowNull: false,
       },
       author: {
         type: Sequelize.INTEGER,

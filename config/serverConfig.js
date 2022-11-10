@@ -21,6 +21,8 @@ const serverConfig = (app) => {
   app.use(session(sessionConfig));
   app.use(ssr);
   app.use(getUser);
+  app.use(resLocals);
+  app.use(cookiesCleaner);
 };
 
 module.exports = serverConfig;
