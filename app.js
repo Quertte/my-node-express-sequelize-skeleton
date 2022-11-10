@@ -8,6 +8,7 @@ const apiRouter = require('./routes/api/api.main');
 const mainRouter = require('./routes/render/main.route');
 const authRouter = require('./routes/render/auth.route');
 const regaRouter = require('./routes/render/req.route');
+const usersRouter = require('./routes/render/users.route');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/', mainRouter);
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
 app.use('/registration', regaRouter);
+app.use('/users', usersRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started at ${PORT} port`);

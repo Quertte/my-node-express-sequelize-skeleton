@@ -1,6 +1,7 @@
 // forms
 const formRegistration = document.querySelector('#formRegistration');
 const formLogin = document.querySelector('#formLogin');
+const formEdit = document.querySelector('#formEdit');
 
 // inputs
 const pass = document.querySelector('#regPassword');
@@ -10,6 +11,9 @@ const loginPassword = document.querySelector('#loginPassword');
 // Sections
 const feedback = document.querySelector('#feedback');
 const cardList = document.querySelector('#cardList');
+
+// Buttons
+const deleteBtn = document.querySelector('#deleteBtn');
 
 function validate() {
   if (pass.value !== confPass.value) {
@@ -89,6 +93,43 @@ if (formLogin) {
       feedback.textContent = data.message;
       feedback.style.display = 'block';
     } else {
+      window.location.href = data.url;
+    }
+  });
+}
+
+if (formEdit) {
+  formEdit.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const { action, username, email } = event.target;
+
+    const response = await fetch(action, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username.value, email: email.value }),
+    });
+
+    const data = await response.json();
+
+    if (data.updated) {
+      window.location.href = data.url;
+    }
+  });
+}
+
+if (deleteBtn) {
+  deleteBtn.addEventListener('click', async (event) => {
+    const { url } = event.target.dataset;
+
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'Application/json' },
+    });
+
+    const data = await response.json();
+
+    if (data.delete) {
       window.location.href = data.url;
     }
   });

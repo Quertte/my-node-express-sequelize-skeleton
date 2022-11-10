@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Home = require('../../views/Home');
+const Profile = require('../../views/Profile');
 const Dashboard = require('../../views/Dashboard');
 
 const { sessionChecker } = require('../../middleware/auth');
@@ -29,21 +30,21 @@ router.route('/logout')
     }
   });
 
-// router.route('/profile')
-//   .get((req, res) => {
-//     const { userId } = req.session;
+router.route('/profile')
+  .get((req, res) => {
+    const { userId } = req.session;
 
-//     if (userId) {
-//       res.renderComponent(Profile, {
-//         user: res.locals.user,
-//         registration: res.locals.user.createdAt.toString(),
-//         ip: req.ip ?? '127.0.0.1',
-//         title: 'Your Profile',
-//       });
-//     } else {
-//       res.redirect('/auth');
-//     }
-//   });
+    if (userId) {
+      res.renderComponent(Profile, {
+        user: res.locals.user,
+        registration: res.locals.user.createdAt.toString(),
+        ip: req.ip ?? '127.0.0.1',
+        title: 'Your Profile',
+      });
+    } else {
+      res.redirect('/auth');
+    }
+  });
 
 // маршрутизация панели управления
 router.route('/dashboard')
